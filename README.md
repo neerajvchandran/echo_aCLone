@@ -1,4 +1,4 @@
-# 🌊 Echo
+# Echo
 
 **Echo** is a simple social media platform where users can connect, follow each other, and share short posts.  
 It includes authentication, OTP verification, password reset, profiles, likes, and a personalized feed.
