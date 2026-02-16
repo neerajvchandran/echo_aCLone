@@ -1,222 +1,177 @@
-# echo_aClone
+# 🌊 Echo
 
-# Mini Social (Twitter-ish Clone)
+**Echo** is a simple social media platform where users can connect, follow each other, and share short posts.  
+It includes authentication, OTP verification, password reset, profiles, likes, and a personalized feed.
 
-This is a small full-stack social media app I built using the MERN stack.  
-The goal wasn’t to build the next Twitter — it was to understand how everything actually connects in a real app:
-
-Auth → Users → Followers → Feed → Posts → Permissions.
-
-Most of the focus went into backend logic, authentication flow, and route protection rather than fancy UI.
+Built using the **MERN Stack** (MongoDB, Express, React, Node.js).
 
 ---
 
-## What This App Does
+## 🚀 Features
 
-### Authentication
-- Signup with OTP email verification
-- Login with JWT
-- Logout
+### 🔐 Authentication
+- Signup with email, username, and password
+- Email OTP verification (via SendGrid)
+- Secure login with JWT
 - Forgot password (OTP-based reset)
-- Reset password
-- Delete account (with password + confirmation text)
+- Logout functionality
+- Delete account (password confirmation required)
 
-### Users
-- Unique username + email
-- View all users
+### 👥 Social
+- View all users (People page)
 - Follow other users
-- See follower / following counts
-- Visit profile pages
+- View profiles
+- Followers & following count
 
-### Posts
+### 📰 Feed
 - Create posts
-- View feed (posts from users you follow)
-- Like / Unlike posts
 - Edit your own posts
 - Delete your own posts
-- Timestamps + edited flag
+- Like / Unlike posts
+- View posts from users you follow
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
-**Frontend**
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT (Authentication)
+- bcryptjs (Password hashing)
+- SendGrid (Email OTP)
+
+### Frontend
 - React
 - React Router
 - Axios
-- Context API (for auth state)
-
-**Backend**
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- JWT authentication
-- SendGrid for OTP emails
-- Express-session (optional session handling)
+- Context API (Authentication state)
 
 ---
 
-## Project Structure (Backend)
+## 📂 Project Structure
 
-server/
+```
+echo/
 │
-├── models/
-│   ├── User.js
-│   └── Post.js
+├── backend/
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Post.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── feed.js
+│   │   └── people.js
+│   ├── middleware/
+│   │   └── requireAuth.js
+│   └── utils/
+│       └── sendOtp.js
 │
-├── routes/
-│   ├── auth.js
-│   ├── feed.js
-│   └── people.js
-│
-├── middleware/
-│   └── requireAuth.js
-│
-├── utils/
-│   └── sendOtp.js
-│
-└── server.js
+├── frontend/
+│   ├── pages/
+│   ├── components/
+│   ├── context/
+│   └── api/
+```
 
 ---
 
-## Database Models
+## ⚙️ Environment Variables (Backend)
 
-### User
-- username (unique)
-- email (unique)
-- passwordHash
-- followers [UserId]
-- following [UserId]
-- otp
-- otpExpiry
-- otpVerified
+Create a `.env` file inside your backend folder:
 
-### Post
-- authorId
-- content
-- likes [UserId]
-- edited (boolean)
-- timestamps
+```
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+
+SENDGRID_API_KEY=your_sendgrid_api_key
+FROM_EMAIL=your_verified_sender_email
+```
 
 ---
 
-## API Routes
+## ▶️ Running the Project
 
-All routes are prefixed with:
+### 1️⃣ Backend
 
-/api
+```
+cd backend
+npm install
+npm run dev
+```
 
----
-
-### Auth Routes
-
-POST /api/auth/signup  
-POST /api/auth/verify-otp  
-POST /api/auth/login  
-POST /api/auth/forgot  
-POST /api/auth/forgot/verify-otp  
-POST /api/auth/reset-password  
-POST /api/auth/logout  
-POST /api/auth/delete-account  
-
----
-
-### Feed Routes
-
-GET /api/feed  
-POST /api/feed/create  
-POST /api/feed/:id/like  
-PUT /api/feed/posts/:id  
-DELETE /api/feed/posts/:id  
-
----
-
-### People Routes
-
-GET /api/people  
-GET /api/people/:id  
-POST /api/people/:id/follow  
-
----
-
-## How Authentication Works
-
-Protected routes use a custom middleware called `requireAuth`.
-
-It:
-1. Reads the Bearer token
-2. Verifies it using JWT
-3. Fetches the user from MongoDB
-4. Attaches the user to `req.currentUser`
-
-If anything fails → 401 Unauthorized.
-
----
-
-## Environment Variables
-
-Create a `.env` file inside the backend folder:
-
-MONGO_URI=your_mongodb_uri  
-JWT_SECRET=your_secret  
-SESSION_SECRET=your_session_secret  
-CLIENT_URL=http://localhost:5173  
-SENDGRID_API_KEY=your_key  
-FROM_EMAIL=verified_sender_email  
-
----
-
-## Running The Project
-
-### Backend
-
-cd server  
-npm install  
-npm run dev  
-
-Runs on:
-http://localhost:3000  
+Backend runs at:
+```
+http://localhost:3000
+```
 
 ---
 
 ### Frontend
 
-cd client  
-npm install  
-npm run dev  
+```
+cd frontend
+npm install
+npm run dev
+```
 
-Runs on:
-http://localhost:5173  
-
----
-
-## Why I Built This
-
-I wanted to understand how a real social app works under the hood:
-
-- How JWT auth actually connects frontend and backend
-- How to manage relationships like followers
-- How to protect routes properly
-- How to control permissions (edit/delete only your posts)
-- How to structure routes cleanly
-
-This project is more about flow and system thinking than UI design.
+Frontend runs at:
+```
+http://localhost:5173
+```
 
 ---
 
-## Possible Improvements
+## Authentication Flow
+
+### Signup Flow
+1. User registers
+2. OTP is sent to email
+3. User verifies OTP
+4. JWT token is generated
+5. User redirected to Feed
+
+### Login Flow
+1. Email + Password
+2. JWT issued
+3. Token stored in localStorage
+
+---
+
+## Feed Logic
+
+- Feed displays posts only from users you follow
+- Like button toggles like/unlike
+- Users can edit or delete only their own posts
+
+---
+
+## Security
+
+- Passwords hashed using bcrypt
+- JWT expires after 7 days
+- OTP expires in 5 minutes
+- Protected routes secured with `requireAuth` middleware
+
+---
+
+## Future Improvements
 
 - Comments system
-- Profile pictures
-- Feed pagination
-- Real-time notifications
-- Rate limiting on OTP endpoints
-- Cleaner UI design
-- Admin moderation tools
+- Image uploads
+- Notifications
+- Improved UI styling
+- Dark mode
+- Pagination
+- Real-time updates (Socket.io)
 
 ---
 
-That’s it.
 
-It’s a learning project, but it covers the core mechanics of a real social platform.
+
+
+
+This project is for learning purposes.
