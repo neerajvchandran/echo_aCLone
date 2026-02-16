@@ -9,7 +9,7 @@ Built using the **MERN Stack** (MongoDB, Express, React, Node.js).
 
 ## Features
 
-###Authentication
+### Authentication
 - Signup with email, username, and password
 - Email OTP verification (via SendGrid)
 - Secure login with JWT
@@ -17,13 +17,13 @@ Built using the **MERN Stack** (MongoDB, Express, React, Node.js).
 - Logout functionality
 - Delete account (password confirmation required)
 
-###Social
+### Social
 - View all users (People page)
 - Follow other users
 - View profiles
 - Followers & following count
 
-###Feed
+### Feed
 - Create posts
 - Edit your own posts
 - Delete your own posts
@@ -32,7 +32,7 @@ Built using the **MERN Stack** (MongoDB, Express, React, Node.js).
 
 ---
 
-##Tech Stack
+## Tech Stack
 
 ### Backend
 - Node.js
@@ -51,7 +51,7 @@ Built using the **MERN Stack** (MongoDB, Express, React, Node.js).
 
 ---
 
-##Project Structure
+## Project Structure
 
 ```
 echo/
@@ -78,7 +78,7 @@ echo/
 
 ---
 
-##Environment Variables (Backend)
+## Environment Variables (Backend)
 
 Create a `.env` file inside your backend folder:
 
@@ -93,9 +93,9 @@ FROM_EMAIL=your_verified_sender_email
 
 ---
 
-##Running the Project
+## Running the Project
 
-###Backend
+### Backend
 
 ```
 cd backend
